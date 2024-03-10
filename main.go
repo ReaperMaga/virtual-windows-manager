@@ -12,6 +12,7 @@ func main() {
 		Views: engine,
 	})
 	app.Static("css/", "public/css")
+	app.Static("images/", "public/images")
 
 	users := []User{{Name: "Maga"}, {Name: "Justin"}}
 	app.Get("/", func(c *fiber.Ctx) error {
