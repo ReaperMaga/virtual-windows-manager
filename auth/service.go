@@ -2,6 +2,7 @@ package auth
 
 import (
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
@@ -13,7 +14,7 @@ func CreateUser(name string, password string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	user := &User{Name: name, Password: hashed, CreatedAt: time.Now()}
+	user := &User{Id: primitive.NewObjectID(), Name: name, Password: hashed, CreatedAt: time.Now()}
 	err = Repository.Create(user)
 	if err != nil {
 		return nil, err
