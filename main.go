@@ -4,13 +4,20 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	"github.com/joho/godotenv"
+	"os"
 	"strconv"
 	"virtual-windows-manager/auth"
 	"virtual-windows-manager/database"
 )
 
 func main() {
-	err := database.Connect("mongodb://localhost:27017", "vwm")
+	err := godotenv.Load()
+	if err != nil {
+		panic("Please provide a env file")
+	}
+
+	err = database.Connect(os.Getenv("MONGODB_CONNECTION_URI"), "vwm")
 	if err != nil {
 		panic("Cannot connect to the database")
 	}
@@ -21,6 +28,7 @@ func main() {
 		Views: engine,
 	})
 	app.Static("css/", "public/css")
+	app.Static("js/", "public/js")
 	app.Static("images/", "public/images")
 
 	users := []User{{Name: "Maga"}, {Name: "Justin"}}
