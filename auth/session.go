@@ -8,6 +8,8 @@ import (
 	"virtual-windows-manager/database"
 )
 
+var SessionRepository LoginSessionRepository
+
 type LoginSession struct {
 	Id       string             `bson:"_id"`
 	UserId   primitive.ObjectID `bson:"user_id"`
