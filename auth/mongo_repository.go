@@ -48,3 +48,11 @@ func (repo *MongoUserRepository) Delete(user *User) bool {
 	}
 	return result.DeletedCount > 0
 }
+
+func (repo *MongoUserRepository) Update(user *User) (*User, error) {
+	_, err := repo.Collection.ReplaceOne(database.Context, bson.D{{"name", user.Name}}, user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
