@@ -39,9 +39,31 @@ func main() {
 		}, "layouts/default", "layouts/panel")
 	})
 
+	app.Post("/login", func(c *fiber.Ctx) error {
+		c.Accepts("application/x-www-form-urlencoded")
+		username := c.FormValue("username")
+		password := c.FormValue("password")
+
+		success, user := auth.IsAuthAndGetUser(username, password)
+		if !success {
+			return c.Redirect("/login?error=wrong_credentials")
+		}
+		session, err := auth.CreateSession(user)
+		if err != nil {
+			return c.Redirect("/login?error=session_creation_failed")
+		}
+		c.Cookie(&fiber.Cookie{
+			Name:    "session_token",
+			Value:   session.Id,
+			Expires: session.ExpireAt,
+		})
+		return c.Redirect("/")
+	})
+
 	app.Get("/login", func(c *fiber.Ctx) error {
+		foundErr := c.Query("error")
 		return c.Render("login", fiber.Map{
-			"Title": "This is a title",
+			"Error": foundErr,
 		}, "layouts/default")
 	})
 

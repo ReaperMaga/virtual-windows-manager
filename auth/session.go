@@ -2,27 +2,11 @@ package auth
 
 import (
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"time"
 	"virtual-windows-manager/database"
 )
 
 var SessionRepository LoginSessionRepository
-
-type LoginSession struct {
-	Id       string             `bson:"_id"`
-	UserId   primitive.ObjectID `bson:"user_id"`
-	ExpireAt time.Time          `bson:"expire_at"`
-}
-
-type LoginSessionRepository interface {
-	Create(session *LoginSession) error
-	Delete(session *LoginSession) bool
-	Update(session *LoginSession) (*LoginSession, error)
-	FindByIdOrErr(id string) (*LoginSession, error)
-	ExistsById(id string) bool
-}
 
 type MongoLoginSessionRepository struct {
 	Collection *mongo.Collection

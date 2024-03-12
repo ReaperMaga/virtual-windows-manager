@@ -11,3 +11,9 @@ type User struct {
 	Password  string             `bson:"password"`
 	CreatedAt time.Time          `bson:"created_at"`
 }
+
+type LoginSession struct {
+	Id       string             `bson:"_id"`
+	UserId   primitive.ObjectID `bson:"user_id"`
+	ExpireAt time.Time          `bson:"expire_at"`
+}

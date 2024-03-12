@@ -6,6 +6,13 @@ type UserRepository interface {
 	Update(user *User) (*User, error)
 	FindByNameOrErr(name string) (*User, error)
 	ExistsByName(name string) bool
+	Count() int64
 }
 
-var Repository UserRepository
+type LoginSessionRepository interface {
+	Create(session *LoginSession) error
+	Delete(session *LoginSession) bool
+	Update(session *LoginSession) (*LoginSession, error)
+	FindByIdOrErr(id string) (*LoginSession, error)
+	ExistsById(id string) bool
+}

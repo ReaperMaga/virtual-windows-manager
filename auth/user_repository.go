@@ -6,6 +6,8 @@ import (
 	"virtual-windows-manager/database"
 )
 
+var Repository UserRepository
+
 func NewMongoUserRepository() *MongoUserRepository {
 	collection := database.Database.Collection("users")
 	return &MongoUserRepository{
@@ -55,4 +57,12 @@ func (repo *MongoUserRepository) Update(user *User) (*User, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+func (repo *MongoUserRepository) Count() int64 {
+	count, err := repo.Collection.CountDocuments(database.Context, bson.D{})
+	if err != nil {
+		return 0
+	}
+	return count
 }
