@@ -9,6 +9,7 @@ import (
 	"virtual-windows-manager/auth"
 	"virtual-windows-manager/database"
 	"virtual-windows-manager/middleware"
+	"virtual-windows-manager/vw"
 )
 
 func main() {
@@ -22,6 +23,10 @@ func main() {
 		panic("Cannot connect to the database")
 	}
 	auth.Initialize()
+
+	vw.Initialize()
+
+	vw.CreateVW("test")
 
 	engine := html.New("./public/views", ".html")
 	app := fiber.New(fiber.Config{
