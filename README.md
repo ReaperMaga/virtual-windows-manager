@@ -35,6 +35,15 @@ To get started with Virtual Windows Manager, follow these simple steps:
     docker compose up -d
     ```
 
+## Development
+
+This project uses go `1.21` <br />
+First of all download all necessary dependencies with `go mod download`
+
+To start working you need to fill up the `.env` file before starting.
+
+Now to run the dev mode, just simple use `air` in the root directory
+
 ## Contributing
 
 We welcome contributions from the community to enhance Virtual Windows Manager. If you encounter any bugs, have suggestions for new features, or would like to contribute code, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/reapermaga/virtual-windows-manager).
