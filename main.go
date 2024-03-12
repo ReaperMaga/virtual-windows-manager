@@ -26,8 +26,6 @@ func main() {
 
 	vw.Initialize()
 
-	vw.CreateVW("test")
-
 	engine := html.New("./public/views", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
