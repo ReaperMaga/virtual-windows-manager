@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>Virtual Windows Manager</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <link href="css/tailwind.css" rel="stylesheet" />
-    <link href="css/fonts.css" rel="stylesheet" />
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/fonts.css" rel="stylesheet"/>
+    <link href="css/effects.css" rel="stylesheet"/>
+    <link href="css/border.css" rel="stylesheet"/>
 </head>
-<body class="bg-zinc-900 min-h-screen text-gray-300 flex">
-    {{ template "components/sidebar" . }}
-    {{embed}}
+<body class="bg-gradient-to-r from-black to-zinc-950 min-h-screen text-gray-300 flex">
+{{embed}}
 </body>
 </html>
