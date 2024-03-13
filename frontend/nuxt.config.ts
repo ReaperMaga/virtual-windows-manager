@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// @ts-ignore
 export default defineNuxtConfig({
   modules: [
     '@sidebase/nuxt-auth',
@@ -14,7 +15,7 @@ export default defineNuxtConfig({
       type: 'local',
 
       endpoints: {
-        getSession: {path: '/session'},
+        getSession: { path: '/session' },
         signOut: {
           path: '/logout', method: 'get'
         }
@@ -24,7 +25,7 @@ export default defineNuxtConfig({
       },
       token: {
         signInResponseTokenPointer: '/sessionToken',
-        type: "",
+        type: '',
         maxAgeInSeconds: 360000
       },
       sessionDataType: {
