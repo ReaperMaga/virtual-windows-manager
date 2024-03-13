@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useMessage } from 'naive-ui'
-import { useAuth } from '#imports'
 
 const props = defineProps({
   isNavbarCollapsed: Boolean

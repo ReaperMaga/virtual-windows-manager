@@ -1,53 +1,45 @@
-<script lang="ts">
-import { useMessage } from 'naive-ui'
-import { useAuth } from '#imports'
+<script lang="ts" setup>
+import type { FormInst } from 'naive-ui'
 
-export default defineComponent({
-  setup () {
-    const { signIn } = useAuth()
-    const formRef = ref<null>(null)
-    const message = useMessage()
-    const formValue = ref(
-      {
-        user: {
-          username: '',
-          password: ''
-        }
-      }
-    )
-    return {
-      formRef,
-      size: ref<'small' | 'medium' | 'large'>('medium'),
-      formValue,
-      rules: {
-        user: {
-          name: {
-            required: true,
-            message: 'Please input your name',
-            trigger: 'blur'
-          },
-          password: {
-            required: true,
-            message: 'Please input your password',
-            trigger: ['input', 'blur']
-          }
-        }
-      },
-      handleValidateClick (e: MouseEvent) {
-        e.preventDefault()
-        formRef.value?.validate((errors) => {
-          if (!errors) {
-            signIn(formValue.value.user, { callbackUrl: '/' }).then(() => {
-              message.success('Successfully logged in')
-            })
-          } else {
-            message.error('Wrong credentials')
-          }
-        })
-      }
+const { signIn } = useAuth()
+const formRef = ref<FormInst | null>(null)
+const message = useMessage()
+const formValue = ref(
+  {
+    user: {
+      username: '',
+      password: ''
     }
   }
-})
+)
+
+const rules = {
+  user: {
+    name: {
+      required: true,
+      message: 'Please input your name',
+      trigger: 'blur'
+    },
+    password: {
+      required: true,
+      message: 'Please input your password',
+      trigger: ['input', 'blur']
+    }
+  }
+}
+
+function handleValidateClick (e: MouseEvent) {
+  e.preventDefault()
+  formRef.value?.validate((errors) => {
+    if (!errors) {
+      signIn(formValue.value.user, { callbackUrl: '/' }).then(() => {
+        message.success('Successfully logged in')
+      })
+    } else {
+      message.error('Wrong credentials')
+    }
+  })
+}
 </script>
 
 <template>
@@ -58,7 +50,7 @@ export default defineComponent({
         :label-width="80"
         :model="formValue"
         :rules="rules"
-        :size="large"
+        size="large"
       >
         <n-form-item label="Username" path="user.username">
           <n-input v-model:value="formValue.user.username" placeholder="..." />

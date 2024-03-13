@@ -31,20 +31,7 @@ func main() {
 	app.Use(middleware.AuthMiddleware)
 
 	auth.InitRoutes(app)
-
-	app.Post("/create", func(c *fiber.Ctx) error {
-		c.Accepts("application/x-www-form-urlencoded")
-
-		name := c.FormValue("name")
-		osString := c.FormValue("os")
-
-		virtualWindows, err := vw.CreateVW(name, osString)
-		if err != nil {
-			fmt.Println("There was an error while trying to create a vw: ", err)
-		}
-		fmt.Println("Successfully created new vw: ", virtualWindows.Name)
-		return c.Redirect("/")
-	})
+	vw.InitRoutes(app)
 
 	fmt.Println(app.Listen(":8080"))
 }

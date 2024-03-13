@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import useIsSidebarCollapsed from '~/composeables/useIsSidebarCollapsed'
 
-const route = useRoute()
-
-const { status } = useAuth()
-const isAuthenticated = computed(() => status.value === 'authenticated')
-
-const isFooterExpanded = ref(false)
 const isNavbarCollapsed = useIsSidebarCollapsed()
 </script>
 
 <template>
   <div class="flex">
+    <TheDrawers />
     <n-layout position="absolute" has-sider>
       <n-layout-sider
         class="hidden md:block"
@@ -19,7 +13,7 @@ const isNavbarCollapsed = useIsSidebarCollapsed()
         collapse-mode="width"
         :collapsed-width="75"
         :collapsed="isNavbarCollapsed"
-        show-trigger="arrow-circle"
+        show-trigger="bar"
         bordered
         @collapse="isNavbarCollapsed = true"
         @expand="isNavbarCollapsed = false"

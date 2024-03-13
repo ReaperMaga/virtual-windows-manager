@@ -1,17 +1,36 @@
 <script lang="ts" setup>
-import { useAuth } from '#imports'
 
 definePageMeta({
   layout: 'panel'
 })
 
-const { token, getSession } = useAuth()
+const { vwsQuery } = useQuery()
 
-const session = await getSession()
+const { data } = vwsQuery.list()
 
-console.log(token.value)
+const createDrawerActive = useState('create-drawer', () => false)
 
 </script>
 
 <template>
+  <div>
+    <div v-if="data && data.length > 0" class="px-16 py-16 grid grid-cols-3 gap-5 w-full">
+      <n-card v-for="value in data" :key="value.id" title="Virtual Windows Manager" size="medium">
+        <h1>{{ value.name }}</h1>
+      </n-card>
+    </div>
+    <n-result
+      v-else
+      class="mt-20"
+      status="404"
+      title="It's pretty empty here"
+      description="Why don't you add your first virtual windows machine here?"
+    >
+      <template #footer>
+        <n-button @click="createDrawerActive = true">
+          Create a new machine
+        </n-button>
+      </template>
+    </n-result>
+  </div>
 </template>

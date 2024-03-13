@@ -24,5 +24,9 @@
   },
   "peerDependencies": {
     "next-auth": "4.21.1"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": "^5.28.0",
+    "zod": "^3.22.4"
   }
 }
