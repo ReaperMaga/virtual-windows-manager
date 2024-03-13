@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -66,12 +67,16 @@ func CreateUser(name string, password string) (*User, error) {
 }
 
 func CreateSession(user *User) (*LoginSession, error) {
+	sessionTime, err := strconv.ParseInt(os.Getenv("SESSION_TIME"), 10, 64)
+	if err != nil {
+		return nil, err
+	}
 	session := &LoginSession{
 		Id:       uuid.NewString(),
 		UserId:   user.Id,
-		ExpireAt: time.Now().Add(time.Second * 20),
+		ExpireAt: time.Now().Add(time.Second * time.Duration(sessionTime)),
 	}
-	err := SessionRepository.Create(session)
+	err = SessionRepository.Create(session)
 	if err != nil {
 		return nil, err
 	}
