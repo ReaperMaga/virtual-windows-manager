@@ -1,8 +1,10 @@
 package auth
 
 import (
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"virtual-windows-manager/database"
 )
 
@@ -14,6 +16,17 @@ type MongoLoginSessionRepository struct {
 
 func NewMongoLoginSessionRepository() *MongoLoginSessionRepository {
 	collection := database.Database.Collection("sessions")
+
+	indexModel := mongo.IndexModel{
+		Keys:    bson.M{"expire_at": 1},
+		Options: options.Index().SetExpireAfterSeconds(0),
+	}
+
+	_, err := collection.Indexes().CreateOne(database.Context, indexModel)
+	if err != nil {
+		fmt.Println("There was an error while trying to create an index: ", err)
+	}
+
 	return &MongoLoginSessionRepository{
 		Collection: collection,
 	}

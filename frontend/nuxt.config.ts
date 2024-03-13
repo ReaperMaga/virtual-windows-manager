@@ -4,10 +4,14 @@ export default defineNuxtConfig({
   modules: [
     '@sidebase/nuxt-auth',
     '@nuxtjs/tailwindcss',
-    '@bg-dev/nuxt-naiveui'
+    '@bg-dev/nuxt-naiveui',
+    'nuxt-icon'
   ],
   typescript: {
     shim: false
+  },
+  naiveui: {
+    colorModePreference: 'dark'
   },
   auth: {
     baseURL: 'http://localhost:8080/auth',
@@ -21,7 +25,7 @@ export default defineNuxtConfig({
         }
       },
       pages: {
-        login: '/'
+        login: '/login'
       },
       token: {
         signInResponseTokenPointer: '/sessionToken',
