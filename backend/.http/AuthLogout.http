@@ -1,0 +1,2 @@
+GET http://localhost:8080/auth/logout
+Authorization: e2190ea9-9e94-4c5d-a9d6-985c3a709816
