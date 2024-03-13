@@ -37,9 +37,13 @@ func main() {
 	app.Use(middleware.AuthMiddleware)
 
 	app.Get("/", func(c *fiber.Ctx) error {
+		vws, err := vw.Repository.GetAll()
+		if err != nil {
+			fmt.Println("There was an error while trying to retrieve all vws: ", err)
+		}
 		return c.Render("index", fiber.Map{
-			"Title": "This is a title",
-		}, "layouts/default", "layouts/panel")
+			"VirtualWindows": vws,
+		}, "layouts/default")
 	})
 
 	app.Post("/login", func(c *fiber.Ctx) error {
@@ -63,11 +67,25 @@ func main() {
 		return c.Redirect("/")
 	})
 
+	app.Post("/create", func(c *fiber.Ctx) error {
+		c.Accepts("application/x-www-form-urlencoded")
+
+		name := c.FormValue("name")
+		osString := c.FormValue("os")
+
+		virtualWindows, err := vw.CreateVW(name, osString)
+		if err != nil {
+			fmt.Println("There was an error while trying to create a vw: ", err)
+		}
+		fmt.Println("Successfully created new vw: ", virtualWindows.Name)
+		return c.Redirect("/")
+	})
+
 	app.Get("/login", func(c *fiber.Ctx) error {
 		foundErr := c.Query("error")
 		return c.Render("login", fiber.Map{
 			"Error": foundErr,
-		}, "layouts/default")
+		})
 	})
 
 	fmt.Println(app.Listen(":3000"))

@@ -67,11 +67,11 @@ func StartVW(virtualWindows *VirtualWindows) error {
 	return nil
 }
 
-func CreateVW(name string) (*VirtualWindows, error) {
+func CreateVW(name string, os string) (*VirtualWindows, error) {
 	virtualWindows := &VirtualWindows{
 		Id:   uuid.NewString(),
 		Name: name,
-		OS:   "win7",
+		OS:   os,
 	}
 	err := Repository.Create(virtualWindows)
 	if err != nil {

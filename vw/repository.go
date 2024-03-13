@@ -12,6 +12,7 @@ type VirtualWindowsRepository interface {
 	Create(vw *VirtualWindows) error
 	Delete(vw *VirtualWindows) bool
 	Update(vw *VirtualWindows) (*VirtualWindows, error)
+	GetAll() ([]*VirtualWindows, error)
 	FindByNameOrErr(name string) (*VirtualWindows, error)
 	ExistsByName(name string) bool
 	Count() int64
@@ -74,4 +75,17 @@ func (repo *MongoVirtualWindowsRepository) Count() int64 {
 		return 0
 	}
 	return count
+}
+
+func (repo *MongoVirtualWindowsRepository) GetAll() ([]*VirtualWindows, error) {
+	cursor, err := repo.Collection.Find(database.Context, bson.D{})
+	if err != nil {
+		return nil, err
+	}
+	var results []*VirtualWindows
+	err = cursor.All(database.Context, &results)
+	if err != nil {
+		return nil, err
+	}
+	return results, nil
 }

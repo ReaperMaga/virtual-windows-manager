@@ -1,10 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Virtual Windows Manager</title>
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/fonts.css" rel="stylesheet"/>
+    <link href="css/login.css" rel="stylesheet"/>
+    <link href="css/global.css" rel="stylesheet"/>
+</head>
+<body class="bg-gradient-to-r from-black to-zinc-950 min-h-screen text-gray-300 flex">
 <div class="w-full min-h-screen overflow flex items-center justify-center" style="background-image: url(images/bg.jpg); background-size: cover; background-repeat: no-repeat">
     <div class="w-[30%] glassy flex items-center lato-bold py-5 flex-col px-10">
 
         <h2 class="text-gray-300 text-xl">Sign in</h2>
         <hr />
         {{if eq .Error "wrong_credentials"}}
-          <span class="mt-2 text-red-500">Wrong credentials</span>
+        <span class="mt-2 text-red-500">Wrong credentials</span>
         {{end}}
 
         <form class="flex flex-col gap-y-8 mt-8 w-full" action="/login" method="post">
@@ -24,3 +38,6 @@
 
     </div>
 </div>
+
+</body>
+</html>
