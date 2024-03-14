@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/joho/godotenv"
 	"os"
 	"virtual-windows-manager/auth"
 	"virtual-windows-manager/database"
 	"virtual-windows-manager/middleware"
 	"virtual-windows-manager/vw"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 	if err != nil {
 		panic("Cannot connect to the database")
 	}
+
 	auth.Initialize()
 
 	vw.Initialize()

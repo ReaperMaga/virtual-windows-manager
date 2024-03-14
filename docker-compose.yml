@@ -5,6 +5,8 @@ services:
     image: mongo
     volumes:
       - ./db:/data/db
+    ports:
+      - 27017:27017
   backend:
     build:
       context: backend/
@@ -23,10 +25,10 @@ services:
   frontend:
     build:
       context: frontend/
+      args:
+        - AUTH_BASE_URL=http://localhost:8082/auth
     ports:
       - 3000:3000
     environment:
-      - AUTH_SECRET=changeme
-      - AUTH_ORIGIN=http://0.0.0.0:8082/auth
-      - API_BASE_URL=http://0.0.0.0:8082
-      - VNC_BASE_URL=http://localhost
+      - NUXT_PUBLIC_API_BASE_URL=http://localhost:8082
+      - NUXT_PUBLIC_VNC_BASE_URL=http://localhost

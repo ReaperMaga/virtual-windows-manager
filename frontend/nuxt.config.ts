@@ -16,12 +16,12 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.API_BASE_URL,
-      vncBaseUrl: process.env.VNC_BASE_URL
+      apiBaseUrl: '',
+      vncBaseUrl: ''
     }
   },
   auth: {
-    baseURL: process.env.API_BASE_URL + '/auth',
+    baseURL: 'http://localhost:8082/auth',
     provider: {
       type: 'local',
       endpoints: {

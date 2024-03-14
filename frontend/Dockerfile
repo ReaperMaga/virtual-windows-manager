@@ -44,6 +44,10 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 
 # Copy the rest of the source files into the image.
 COPY . .
+
+ARG AUTH_BASE_URL
+ENV AUTH_BASE_URL $AUTH_BASE_URL
+
 # Run the build script.
 RUN pnpm run build
 

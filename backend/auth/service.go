@@ -3,12 +3,13 @@ package auth
 import (
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"golang.org/x/crypto/bcrypt"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const salt int = 14
