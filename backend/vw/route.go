@@ -6,7 +6,7 @@ import (
 )
 
 func InitRoutes(app *fiber.App) {
-	app.Post("/vws/create", func(c *fiber.Ctx) error {
+	app.Post("/vws", func(c *fiber.Ctx) error {
 		var request *CreateVWRequest
 		err := c.BodyParser(&request)
 		if err != nil {

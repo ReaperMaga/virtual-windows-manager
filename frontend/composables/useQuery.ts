@@ -6,22 +6,37 @@ export default () => {
   return {
     vwsQuery: {
       list: () => useQuery({
-        queryFn: () => api('http://localhost:8080/vws', z.array(virtualWindowsSchema)),
+        queryFn: () => api({
+          path: 'http://localhost:8080/vws',
+          method: 'GET'
+        }, z.array(virtualWindowsSchema)),
         queryKey: ['vws', 'list']
       })
     }
   }
 }
 
-async function api<T extends z.ZodTypeAny> (path: string, schema: T): Promise<z.infer<T>> {
+interface FetchOptions<I extends z.ZodTypeAny> {
+  path: string
+  method?: 'GET' | 'POST' | 'DELETE' | 'PATCH'
+  body?: z.input<I>
+}
+
+export async function api<I extends z.ZodTypeAny, O extends z.ZodTypeAny> (
+  options: FetchOptions<I>,
+  schemaOutput: O,
+  schemaInput?: I
+): Promise<z.infer<O>> {
   const { token } = useAuth()
   if (!token.value) {
     throw new Error('No token provided')
   }
-  const data = await $fetch(path, {
+  const data = await $fetch(options.path, {
+    method: options.method,
+    body: schemaInput ? schemaInput?.parse(options.body) : undefined,
     headers: {
       Authorization: token.value
     }
   })
-  return schema.parse(data)
+  return schemaOutput.parse(data)
 }

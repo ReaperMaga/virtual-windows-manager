@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+import { useQueryClient } from '@tanstack/vue-query'
 import type { FormInst } from 'naive-ui'
+import { api } from '~/composables/useQuery'
+import { createVirtualWindowsSchema, type CreateVirtualWindow, virtualWindowsSchema } from '~/schemas'
 
 const active = useState('create-drawer', () => false)
 
 const formRef = ref<FormInst | null>(null)
-const formValue = ref(
+const formValue = ref<CreateVirtualWindow>(
   {
     name: '',
-    os: ''
+    os: undefined
   }
 )
 
@@ -31,10 +34,22 @@ const rules = {
   }
 }
 
+const query = useQueryClient()
+
 function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
-  formRef.value?.validate(() => {
-
+  formRef.value?.validate((errors) => {
+    if (!errors) {
+      api({
+        path: 'http://localhost:8080/vws',
+        method: 'POST',
+        body: formValue.value
+      }, virtualWindowsSchema, createVirtualWindowsSchema).then(() => {
+        query.invalidateQueries({ queryKey: ['vws', 'list'] })
+        formValue.value = { name: '', os: undefined }
+        active.value = false
+      })
+    }
   })
 }
 </script>

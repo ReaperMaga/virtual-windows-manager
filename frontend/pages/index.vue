@@ -6,15 +6,15 @@ definePageMeta({
 
 const { vwsQuery } = useQuery()
 
-const { data } = vwsQuery.list()
+const { data, isLoading } = vwsQuery.list()
 
 const createDrawerActive = useState('create-drawer', () => false)
 
 </script>
 
 <template>
-  <div>
-    <div v-if="data && data.length > 0" class="px-16 py-16 grid grid-cols-3 gap-5 w-full">
+  <div v-if="!isLoading">
+    <div v-if="data && data.length > 0" class="px-16 py-16 w-full grid grid-cols-3 gap-3">
       <n-card v-for="value in data" :key="value.id" title="Virtual Windows Manager" size="medium">
         <h1>{{ value.name }}</h1>
       </n-card>
