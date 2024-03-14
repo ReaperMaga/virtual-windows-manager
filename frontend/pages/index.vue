@@ -35,6 +35,34 @@ function handleDelete (id: string, name: string) {
   })
 }
 
+function handleStart (id: string, name: string) {
+  api({
+    path: 'http://localhost:8080/vws/' + id + '/start',
+    method: 'POST'
+  }, virtualWindowsSchema).then(() => {
+    query.invalidateQueries({ queryKey: ['vws', 'list'] })
+    message.warning('You started ' + name)
+  })
+}
+
+function handleStop (id: string, name: string) {
+  dialog.warning({
+    title: 'Confirm',
+    content: 'Are you sure?',
+    positiveText: 'Sure',
+    negativeText: 'Not Sure',
+    onPositiveClick: () => {
+      api({
+        path: 'http://localhost:8080/vws/' + id + '/stop',
+        method: 'POST'
+      }, virtualWindowsSchema).then(() => {
+        query.invalidateQueries({ queryKey: ['vws', 'list'] })
+        message.warning('You stopped ' + name)
+      })
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -43,7 +71,8 @@ function handleDelete (id: string, name: string) {
       <n-card v-for="value in data" :key="value.id" title="Virtual Windows Manager" size="medium" class="transition hover:shadow-xl">
         <template #header>
           <div class="flex items-center gap-2">
-            <span><Icon name="material-symbols:settings" size="25px" color="red" /></span>
+            <span v-if="!value.running"><Icon name="material-symbols:settings" size="25px" color="red" /></span>
+            <span v-else><Icon name="material-symbols:settings" size="25px" color="green" class="animate-spin" /></span>
             <h1 class="text-gray-300">
               {{ value.name }}
             </h1>
@@ -54,12 +83,20 @@ function handleDelete (id: string, name: string) {
           OS: {{ value.os }}
         </p>
         <div class="flex w-full">
-          <div class="flex justify-end gap-3 w-full">
+          <div v-if="!value.running" class="flex justify-end gap-3 w-full">
             <n-button type="error" ghost @click="handleDelete(value.id, value.name)">
               Delete
             </n-button>
-            <n-button type="success" ghost>
+            <n-button type="success" ghost @click="handleStart(value.id, value.name)">
               Start
+            </n-button>
+          </div>
+          <div v-if="value.running" class="flex justify-end gap-3 w-full">
+            <n-button type="info" ghost>
+              Inspect
+            </n-button>
+            <n-button type="error" ghost @click="handleStop(value.id, value.name)">
+              Stop
             </n-button>
           </div>
         </div>

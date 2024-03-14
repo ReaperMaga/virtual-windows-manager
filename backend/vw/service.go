@@ -87,3 +87,15 @@ func IsVWRunning(windows *VirtualWindows) bool {
 	}
 	return c.State.Running == true
 }
+
+func StopVW(windows *VirtualWindows) error {
+	err := Client.ContainerStop(Context, windows.Id, container.StopOptions{})
+	if err != nil {
+		return err
+	}
+	err = Client.ContainerRemove(Context, windows.Id, container.RemoveOptions{})
+	if err != nil {
+		return err
+	}
+	return err
+}
