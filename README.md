@@ -1,4 +1,4 @@
-<h1><img align="center" height="48" src="public/images/logo.svg"> Virtual Windows Manager</h3>
+# Virtual Windows Manager
 
 Virtual Windows Manager is a powerful tool designed to streamline the process of creating and managing Windows environments using Docker containers. Whether you're a developer, tester, or system administrator, Virtual Windows Manager simplifies the setup and maintenance of Windows environments, allowing you to focus on your tasks without worrying about compatibility issues or complex configurations.
 
