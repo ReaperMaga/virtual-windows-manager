@@ -50,7 +50,7 @@ We welcome contributions from the community to enhance Virtual Windows Manager. 
 
 ## License
 
-Virtual Windows Manager is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Virtual Windows Manager is licensed under the MIT License. See the [LICENSE](backend/LICENSE) file for details.
 
 ## Support
 
