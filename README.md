@@ -1,5 +1,7 @@
 # Virtual Windows Manager
 
+<img src="./showcase.png" />
+
 Virtual Windows Manager is a powerful tool designed to streamline the process of creating and managing Windows environments using Docker containers. Whether you're a developer, tester, or system administrator, Virtual Windows Manager simplifies the setup and maintenance of Windows environments, allowing you to focus on your tasks without worrying about compatibility issues or complex configurations.
 
 ## Features
@@ -28,21 +30,20 @@ To get started with Virtual Windows Manager, follow these simple steps:
     git clone https://github.com/reapermaga/virtual-windows-manager.git
     ```
 
-3. **Run**: Navigate to the cloned directory and use docker compose to start your app.
-
+3. **Edit environment variables**: Navigate to the cloned directory and edit the `docker-compose.yml` file to your needs
     ```bash
     cd virtual-windows-manager
+    ```
+
+4. **Run**: Use docker compose to start the app.
+
+    ```bash
     docker compose up -d
     ```
 
 ## Development
 
-This project uses go `1.21` <br />
-First of all download all necessary dependencies with `go mod download`
-
-To start working you need to fill up the `.env` file before starting.
-
-Now to run the dev mode, just simple use `air` in the root directory
+If someone is interested in contributing please create an issue and tell me if you need a documentation.
 
 ## Contributing
 
