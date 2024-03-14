@@ -2,26 +2,24 @@ package main
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/joho/godotenv"
 	"os"
 	"virtual-windows-manager/auth"
 	"virtual-windows-manager/database"
 	"virtual-windows-manager/middleware"
 	"virtual-windows-manager/vw"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic("Please provide a env file")
-	}
-
-	err = database.Connect(os.Getenv("MONGODB_CONNECTION_URI"), "vwm")
+	godotenv.Load()
+	err := database.Connect(os.Getenv("MONGODB_CONNECTION_URI"), "vwm")
 	if err != nil {
 		panic("Cannot connect to the database")
 	}
+
 	auth.Initialize()
 
 	vw.Initialize()

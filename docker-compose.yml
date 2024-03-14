@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./db:/data/db
+    ports:
+      - 27017:27017
+  backend:
+    build:
+      context: backend/
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8082:8080
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_CONNECTION_URI=mongodb://mongo:27017
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+      - SESSION_TIME=86400
+  frontend:
+    build:
+      context: frontend/
+      args:
+        - AUTH_BASE_URL=http://localhost:8082/auth
+    ports:
+      - 3000:3000
+    environment:
+      - NUXT_PUBLIC_API_BASE_URL=http://localhost:8082
+      - NUXT_PUBLIC_VNC_BASE_URL=http://localhost
