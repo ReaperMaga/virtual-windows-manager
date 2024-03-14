@@ -14,7 +14,6 @@ const formValue = ref<CreateVirtualWindow>(
     os: undefined
   }
 )
-
 const osOptions = ['win7', 'win8', 'win10', 'win11'].map(
   v => ({
     label: v,
@@ -39,6 +38,8 @@ const query = useQueryClient()
 
 const message = useMessage()
 
+const isMobileScreen = useIsMobileScreen()
+
 function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate((errors) => {
@@ -60,7 +61,12 @@ function handleValidateClick (e: MouseEvent) {
 }
 </script>
 <template>
-  <lazy-n-drawer v-model:show="active" :width="502" placement="right" class="bg-zinc-950">
+  <lazy-n-drawer
+    v-model:show="active"
+    :default-width="isMobileScreen ? '85vw' : '30vw'"
+    placement="right"
+    class="bg-zinc-950"
+  >
     <n-drawer-content title="Create new virtual windows">
       <n-form
         ref="formRef"

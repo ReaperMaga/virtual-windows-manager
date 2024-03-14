@@ -16,6 +16,7 @@
     "@nuxtjs/tailwindcss": "^6.10.4",
     "@sidebase/nuxt-auth": "^0.6.4",
     "@types/node": "^18.11.18",
+    "@vueuse/nuxt": "^10.9.0",
     "eslint": "^8.33.0",
     "nuxt": "^3.9.1",
     "nuxt-icon": "^0.6.9",

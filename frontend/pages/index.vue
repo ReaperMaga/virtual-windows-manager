@@ -69,7 +69,7 @@ function handleStop (id: string, name: string) {
 
 <template>
   <div v-if="!isLoading">
-    <div v-if="data && data.length > 0" class="px-16 py-16 w-full grid grid-cols-3 gap-3">
+    <div v-if="data && data.length > 0" class="p-8 md:p-16 w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
       <n-card v-for="value in data" :key="value.id" title="Virtual Windows Manager" size="medium" class="transition hover:shadow-xl">
         <template #header>
           <div class="flex items-center gap-2">
