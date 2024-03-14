@@ -21,31 +21,8 @@ export default defineNuxtConfig({
     }
   },
   auth: {
-    baseURL: 'http://localhost:8082/auth',
     provider: {
-      type: 'local',
-      endpoints: {
-        getSession: { path: '/session' },
-        signOut: {
-          path: '/logout', method: 'get'
-        }
-      },
-      pages: {
-        login: '/login'
-      },
-      token: {
-        signInResponseTokenPointer: '/sessionToken',
-        type: '',
-        maxAgeInSeconds: 360000
-      },
-      sessionDataType: {
-        id: 'string',
-        name: 'string'
-      }
-    },
-    session: {
-      enableRefreshOnWindowFocus: true,
-      enableRefreshPeriodically: 5000
+      type: 'authjs'
     },
     globalAppMiddleware: {
       isEnabled: true

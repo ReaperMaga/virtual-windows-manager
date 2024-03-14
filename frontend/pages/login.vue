@@ -1,5 +1,11 @@
 <script lang="ts" setup>
 import type { FormInst } from 'naive-ui'
+definePageMeta({
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/'
+  }
+})
 
 const { signIn } = useAuth()
 const formRef = ref<FormInst | null>(null)
@@ -32,7 +38,7 @@ function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
-      signIn(formValue.value.user, { callbackUrl: '/' }).then(() => {
+      signIn('credentials', formValue.value.user, { callbackUrl: '/' }).then(() => {
         message.success('Successfully logged in')
       })
     } else {
