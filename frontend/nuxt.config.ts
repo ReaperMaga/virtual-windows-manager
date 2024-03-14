@@ -21,10 +21,9 @@ export default defineNuxtConfig({
     }
   },
   auth: {
-    baseURL: 'http://localhost:8080/auth',
+    baseURL: process.env.API_BASE_URL + '/auth',
     provider: {
       type: 'local',
-
       endpoints: {
         getSession: { path: '/session' },
         signOut: {

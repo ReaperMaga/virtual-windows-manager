@@ -13,12 +13,8 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic("Please provide a env file")
-	}
-
-	err = database.Connect(os.Getenv("MONGODB_CONNECTION_URI"), "vwm")
+	godotenv.Load()
+	err := database.Connect(os.Getenv("MONGODB_CONNECTION_URI"), "vwm")
 	if err != nil {
 		panic("Cannot connect to the database")
 	}

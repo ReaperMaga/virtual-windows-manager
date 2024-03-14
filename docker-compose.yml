@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./db:/data/db
+  backend:
+    build:
+      context: backend/
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8082:8080
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_CONNECTION_URI=mongodb://mongo:27017
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+      - SESSION_TIME=86400
+  frontend:
+    build:
+      context: frontend/
+    ports:
+      - 3000:3000
+    environment:
+      - AUTH_SECRET=changeme
+      - AUTH_ORIGIN=http://0.0.0.0:8082/auth
+      - API_BASE_URL=http://0.0.0.0:8082
+      - VNC_BASE_URL=http://localhost
