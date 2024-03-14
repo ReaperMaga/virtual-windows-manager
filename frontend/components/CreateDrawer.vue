@@ -45,7 +45,7 @@ function handleValidateClick (e: MouseEvent) {
     if (!errors) {
       createLoading.value = true
       api({
-        path: 'http://localhost:8080/vws',
+        path: '/vws',
         method: 'POST',
         body: formValue.value
       }, virtualWindowsSchema, createVirtualWindowsSchema).then(() => {

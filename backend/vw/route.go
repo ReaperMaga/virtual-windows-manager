@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"strings"
+	"unicode"
 )
 
 func InitRoutes(app *fiber.App) {
@@ -39,6 +41,26 @@ func InitRoutes(app *fiber.App) {
 		virtualWindows.Running = true
 		fmt.Println("Started vw: ", virtualWindows.Name)
 		return c.Status(200).JSON(virtualWindows)
+	})
+	app.Get("/vws/:id/logs", func(c *fiber.Ctx) error {
+		id := c.Params("id")
+		virtualWindows, err := Repository.FindByIdOrErr(id)
+		if err != nil {
+			fmt.Println("VW not found: ", err)
+			return err
+		}
+		if !IsVWRunning(virtualWindows) {
+			return errors.New("VW is not running")
+		}
+		lines, err := GetVWLogs(virtualWindows)
+		if err != nil {
+			fmt.Println("Couldn't retrieve logs from vw(", virtualWindows.Name+"): ", err)
+			return err
+		}
+		clean := strings.TrimFunc(lines, func(r rune) bool {
+			return !unicode.IsGraphic(r)
+		})
+		return c.Status(200).JSON(clean)
 	})
 	app.Post("/vws/:id/stop", func(c *fiber.Ctx) error {
 		id := c.Params("id")

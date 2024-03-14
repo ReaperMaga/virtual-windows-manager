@@ -7,7 +7,9 @@ export const createVirtualWindowsSchema = z.object({
 
 export const virtualWindowsSchema = createVirtualWindowsSchema.merge(z.object({
   id: z.string().min(1).max(64),
-  running: z.boolean()
+  running: z.boolean(),
+  port: z.number()
 }))
 
 export type CreateVirtualWindow = z.input<typeof createVirtualWindowsSchema>
+export type VirtualWindow = z.input<typeof virtualWindowsSchema>

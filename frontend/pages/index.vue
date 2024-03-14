@@ -17,6 +17,8 @@ const dialog = useDialog()
 const message = useMessage()
 const query = useQueryClient()
 
+const { open } = useInspectVW()
+
 function handleDelete (id: string, name: string) {
   dialog.warning({
     title: 'Confirm',
@@ -25,7 +27,7 @@ function handleDelete (id: string, name: string) {
     negativeText: 'Not Sure',
     onPositiveClick: () => {
       api({
-        path: 'http://localhost:8080/vws/' + id,
+        path: '/vws/' + id,
         method: 'DELETE'
       }, virtualWindowsSchema).then(() => {
         query.invalidateQueries({ queryKey: ['vws', 'list'] })
@@ -37,7 +39,7 @@ function handleDelete (id: string, name: string) {
 
 function handleStart (id: string, name: string) {
   api({
-    path: 'http://localhost:8080/vws/' + id + '/start',
+    path: '/vws/' + id + '/start',
     method: 'POST'
   }, virtualWindowsSchema).then(() => {
     query.invalidateQueries({ queryKey: ['vws', 'list'] })
@@ -53,7 +55,7 @@ function handleStop (id: string, name: string) {
     negativeText: 'Not Sure',
     onPositiveClick: () => {
       api({
-        path: 'http://localhost:8080/vws/' + id + '/stop',
+        path: '/vws/' + id + '/stop',
         method: 'POST'
       }, virtualWindowsSchema).then(() => {
         query.invalidateQueries({ queryKey: ['vws', 'list'] })
@@ -82,7 +84,7 @@ function handleStop (id: string, name: string) {
           ID: {{ value.id }} <br>
           OS: {{ value.os }}
         </p>
-        <div class="flex w-full">
+        <div class="flex w-full mt-6">
           <div v-if="!value.running" class="flex justify-end gap-3 w-full">
             <n-button type="error" ghost @click="handleDelete(value.id, value.name)">
               Delete
@@ -92,8 +94,11 @@ function handleStop (id: string, name: string) {
             </n-button>
           </div>
           <div v-if="value.running" class="flex justify-end gap-3 w-full">
-            <n-button type="info" ghost>
+            <n-button type="info" ghost @click="open(value)">
               Inspect
+            </n-button>
+            <n-button type="warning" ghost @click="navigateTo('http://localhost:' + value.port, {open: {target: '_blank'}})">
+              Open in VNC
             </n-button>
             <n-button type="error" ghost @click="handleStop(value.id, value.name)">
               Stop

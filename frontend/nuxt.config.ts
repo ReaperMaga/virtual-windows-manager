@@ -13,6 +13,12 @@ export default defineNuxtConfig({
   naiveui: {
     colorModePreference: 'dark'
   },
+  runtimeConfig: {
+    apiBaseUrl: process.env.API_BASE_URL,
+    public: {
+      apiBaseUrl: process.env.API_BASE_URL
+    }
+  },
   auth: {
     baseURL: 'http://localhost:8080/auth',
     provider: {

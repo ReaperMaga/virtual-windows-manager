@@ -7,7 +7,7 @@ export default () => {
     vwsQuery: {
       list: () => useQuery({
         queryFn: () => api({
-          path: 'http://localhost:8080/vws',
+          path: '/vws',
           method: 'GET'
         }, z.array(virtualWindowsSchema).nullish()),
         queryKey: ['vws', 'list']
@@ -27,11 +27,12 @@ export async function api<I extends z.ZodTypeAny, O extends z.ZodTypeAny> (
   schemaOutput: O,
   schemaInput?: I
 ): Promise<z.infer<O>> {
+  const runtimeConfig = useRuntimeConfig()
   const { token } = useAuth()
   if (!token.value) {
     throw new Error('No token provided')
   }
-  const data = await $fetch(options.path, {
+  const data = await $fetch(runtimeConfig.public.apiBaseUrl + options.path, {
     method: options.method,
     body: schemaInput ? schemaInput?.parse(options.body) : undefined,
     headers: {
