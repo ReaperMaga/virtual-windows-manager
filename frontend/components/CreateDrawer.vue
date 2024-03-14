@@ -7,6 +7,7 @@ import { createVirtualWindowsSchema, type CreateVirtualWindow, virtualWindowsSch
 const active = useState('create-drawer', () => false)
 
 const formRef = ref<FormInst | null>(null)
+const createLoading = ref<boolean>(false)
 const formValue = ref<CreateVirtualWindow>(
   {
     name: '',
@@ -36,18 +37,23 @@ const rules = {
 
 const query = useQueryClient()
 
+const message = useMessage()
+
 function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate((errors) => {
     if (!errors) {
+      createLoading.value = true
       api({
         path: 'http://localhost:8080/vws',
         method: 'POST',
         body: formValue.value
       }, virtualWindowsSchema, createVirtualWindowsSchema).then(() => {
         query.invalidateQueries({ queryKey: ['vws', 'list'] })
-        formValue.value = { name: '', os: undefined }
         active.value = false
+        createLoading.value = false
+        message.success('You successfully created a new vw: ' + formValue.value.name)
+        formValue.value = { name: '', os: undefined }
       })
     }
   })
@@ -74,7 +80,7 @@ function handleValidateClick (e: MouseEvent) {
           />
         </n-form-item>
         <n-form-item>
-          <n-button @click="handleValidateClick">
+          <n-button :loading="createLoading" @click="handleValidateClick">
             Create
           </n-button>
         </n-form-item>

@@ -14,6 +14,7 @@ type VirtualWindowsRepository interface {
 	Update(vw *VirtualWindows) (*VirtualWindows, error)
 	GetAll() ([]*VirtualWindows, error)
 	FindByNameOrErr(name string) (*VirtualWindows, error)
+	FindByIdOrErr(id string) (*VirtualWindows, error)
 	ExistsByName(name string) bool
 	Count() int64
 }
@@ -48,13 +49,27 @@ func (repo *MongoVirtualWindowsRepository) FindByNameOrErr(name string) (*Virtua
 	return result, nil
 }
 
+func (repo *MongoVirtualWindowsRepository) FindByIdOrErr(id string) (*VirtualWindows, error) {
+	findResult := repo.Collection.FindOne(database.Context, bson.D{{"_id", id}})
+	err := findResult.Err()
+	if err != nil {
+		return nil, err
+	}
+	var result *VirtualWindows
+	err = findResult.Decode(&result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (repo *MongoVirtualWindowsRepository) ExistsByName(name string) bool {
 	result := repo.Collection.FindOne(database.Context, bson.D{{"name", name}})
 	return result.Err() == nil
 }
 
 func (repo *MongoVirtualWindowsRepository) Delete(vw *VirtualWindows) bool {
-	result, err := repo.Collection.DeleteOne(database.Context, bson.D{{"name", vw.Name}})
+	result, err := repo.Collection.DeleteOne(database.Context, bson.D{{"_id", vw.Id}})
 	if err != nil {
 		return false
 	}

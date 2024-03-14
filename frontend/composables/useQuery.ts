@@ -9,7 +9,7 @@ export default () => {
         queryFn: () => api({
           path: 'http://localhost:8080/vws',
           method: 'GET'
-        }, z.array(virtualWindowsSchema)),
+        }, z.array(virtualWindowsSchema).nullish()),
         queryKey: ['vws', 'list']
       })
     }

@@ -1,6 +1,7 @@
 package vw
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 )
@@ -17,6 +18,21 @@ func InitRoutes(app *fiber.App) {
 			fmt.Println("There was an error while trying to create a vw: ", err)
 		}
 		fmt.Println("Successfully created new vw: ", virtualWindows.Name)
+		return c.Status(200).JSON(virtualWindows)
+	})
+	app.Delete("/vws/:id", func(c *fiber.Ctx) error {
+		id := c.Params("id")
+		virtualWindows, err := Repository.FindByIdOrErr(id)
+		if err != nil {
+			fmt.Println("VW not found: ", err)
+			return err
+		}
+		success := Repository.Delete(virtualWindows)
+		if !success {
+			fmt.Println("Couldn't delete vw: " + virtualWindows.Name)
+			return errors.New("Couldn't delete: " + virtualWindows.Name)
+		}
+		fmt.Println("Deleted vw: ", virtualWindows.Name)
 		return c.Status(200).JSON(virtualWindows)
 	})
 	app.Get("/vws", func(c *fiber.Ctx) error {
