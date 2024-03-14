@@ -15,9 +15,9 @@ export default defineNuxtConfig({
     colorModePreference: 'dark'
   },
   runtimeConfig: {
-    apiBaseUrl: process.env.API_BASE_URL,
     public: {
-      apiBaseUrl: process.env.API_BASE_URL
+      apiBaseUrl: process.env.API_BASE_URL,
+      vncBaseUrl: process.env.VNC_BASE_URL
     }
   },
   auth: {

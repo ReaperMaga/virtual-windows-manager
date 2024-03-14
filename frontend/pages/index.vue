@@ -16,6 +16,7 @@ const dialog = useDialog()
 
 const message = useMessage()
 const query = useQueryClient()
+const runtimeConfig = useRuntimeConfig()
 
 const { open } = useInspectVW()
 
@@ -97,7 +98,7 @@ function handleStop (id: string, name: string) {
             <n-button type="info" ghost @click="open(value)">
               Inspect
             </n-button>
-            <n-button type="warning" ghost @click="navigateTo('http://localhost:' + value.port, {open: {target: '_blank'}})">
+            <n-button type="warning" ghost @click="navigateTo(runtimeConfig.public.vncBaseUrl + value.port, {open: {target: '_blank'}})">
               Open in VNC
             </n-button>
             <n-button type="error" ghost @click="handleStop(value.id, value.name)">
