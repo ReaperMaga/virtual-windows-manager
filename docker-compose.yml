@@ -25,10 +25,11 @@ services:
   frontend:
     build:
       context: frontend/
-      args:
-        - AUTH_BASE_URL=http://localhost:8082/auth
     ports:
       - 3000:3000
     environment:
-      - NUXT_PUBLIC_API_BASE_URL=http://localhost:8082
-      - NUXT_PUBLIC_VNC_BASE_URL=http://localhost
+      - AUTH_SECRET=testsss
+      - AUTH_ORIGIN=http://host.docker.internal:3000/
+      - NEXTAUTH_URL=http://host.docker.internal:3000/api/auth
+      - NUXT_PUBLIC_API_BASE_URL=http://host.docker.internal:8082
+      - NUXT_PUBLIC_VNC_BASE_URL=http://127.0.0.1

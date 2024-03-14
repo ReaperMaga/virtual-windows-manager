@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/vue-query'
 import { virtualWindowsSchema } from '~/schemas'
 
 export default () => {
+  const { data } = useAuth()
   return {
     vwsQuery: {
       list: () => useQuery({
@@ -10,7 +11,8 @@ export default () => {
           path: '/vws',
           method: 'GET'
         }, z.array(virtualWindowsSchema).nullish()),
-        queryKey: ['vws', 'list']
+        queryKey: ['vws', 'list'],
+        enabled: () => !!data.value?.sessionToken
       })
     }
   }
@@ -28,15 +30,15 @@ export async function api<I extends z.ZodTypeAny, O extends z.ZodTypeAny> (
   schemaInput?: I
 ): Promise<z.infer<O>> {
   const runtimeConfig = useRuntimeConfig()
-  const { token } = useAuth()
-  if (!token.value) {
+  const { data: session } = useAuth()
+  if (!session.value?.sessionToken) {
     throw new Error('No token provided')
   }
   const data = await $fetch(runtimeConfig.public.apiBaseUrl + options.path, {
     method: options.method,
     body: schemaInput ? schemaInput?.parse(options.body) : undefined,
     headers: {
-      Authorization: token.value
+      Authorization: session.value?.sessionToken
     }
   })
   return schemaOutput.parse(data)
