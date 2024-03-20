@@ -33,7 +33,12 @@ const rules = {
     }
   }
 }
-
+/**
+ * @name handleValidateClick
+ * @description This function is used to validate the form and sign in the user
+ * @param {MouseEvent} e - The event object
+ * @returns {void}
+ */
 function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate((errors) => {
@@ -46,6 +51,7 @@ function handleValidateClick (e: MouseEvent) {
     }
   })
 }
+
 </script>
 
 <template>

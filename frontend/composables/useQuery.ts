@@ -24,6 +24,13 @@ interface FetchOptions<I extends z.ZodTypeAny> {
   body?: z.input<I>
 }
 
+/**
+ * This function is used to make API requests to the backend. It uses the fetch function to make the request and the zod library to validate the input and output of the request.
+ * @param options - The options for the request
+ * @param schemaOutput - The schema for the output of the request
+ * @param schemaInput - The schema for the input of the request
+ * @returns The output of the request
+ */
 export async function api<I extends z.ZodTypeAny, O extends z.ZodTypeAny> (
   options: FetchOptions<I>,
   schemaOutput: O,

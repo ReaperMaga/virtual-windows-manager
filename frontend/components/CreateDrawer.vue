@@ -40,6 +40,12 @@ const message = useMessage()
 
 const isMobileScreen = useIsMobileScreen()
 
+/**
+ * @name handleValidateClick
+ * @description This function is used to validate the form and create a new virtual windows machine
+ * @param {MouseEvent} e - The event object
+ * @returns {void}
+ */
 function handleValidateClick (e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate((errors) => {

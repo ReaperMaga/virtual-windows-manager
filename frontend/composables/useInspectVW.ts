@@ -1,5 +1,6 @@
 import type { VirtualWindow } from '~/schemas'
 
+// This is a composable function that will be used to control the inspect drawer
 export default () => {
   const active = useState('inspect-drawer', () => false)
   const vw = useState<VirtualWindow | undefined>('inspect-drawer-id', () => undefined)

@@ -20,6 +20,13 @@ const runtimeConfig = useRuntimeConfig()
 
 const { open } = useInspectVW()
 
+/**
+ * @name handleDelete
+ * @description This function is used to delete a virtual windows machine
+ * @param {string} id - The id of the virtual windows machine
+ * @param {string} name - The name of the virtual windows machine
+ * @returns {void}
+ */
 function handleDelete (id: string, name: string) {
   dialog.warning({
     title: 'Confirm',
@@ -38,6 +45,13 @@ function handleDelete (id: string, name: string) {
   })
 }
 
+/**
+ * @name handleStart
+ * @description This function is used to start a virtual windows machine
+ * @param {string} id - The id of the virtual windows machine
+ * @param {string} name - The name of the virtual windows machine
+ * @returns {void}
+ */
 function handleStart (id: string, name: string) {
   api({
     path: '/vws/' + id + '/start',
@@ -48,6 +62,13 @@ function handleStart (id: string, name: string) {
   })
 }
 
+/**
+ * @name handleStop
+ * @description This function is used to stop a virtual windows machine
+ * @param {string} id - The id of the virtual windows machine
+ * @param {string} name - The name of the virtual windows machine
+ * @returns {void}
+ */
 function handleStop (id: string, name: string) {
   dialog.warning({
     title: 'Confirm',

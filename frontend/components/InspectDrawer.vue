@@ -7,6 +7,9 @@ const isMobileScreen = useIsMobileScreen()
 
 const logs = ref('')
 
+// This file is used to create a drawer that will be used to inspect a virtual windows machine
+// It uses the setInterval function to get the logs of the virtual windows machine every 3 seconds
+
 onMounted(() => {
   setInterval(() => {
     if (active.value) {
