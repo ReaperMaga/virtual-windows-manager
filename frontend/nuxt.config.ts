@@ -27,5 +27,7 @@ export default defineNuxtConfig({
     globalAppMiddleware: {
       isEnabled: true
     }
-  }
+  },
+  tailwindcss: { exposeConfig: true }
+
 })
